@@ -21,7 +21,11 @@ class TodosController < ApplicationController
 
   def update
     @todo = Todo.find_by(id: params[:id])
-    @todo.done = !@todo.done
+    if !params[:todo][:dolist_id].nil?
+      @todo.dolist_id = params[:todo][:dolist_id]
+    else
+      @todo.done = !@todo.done
+    end
     if @todo.save
       puts @todo
       flash[:success] = 'To do updated!'
@@ -33,6 +37,10 @@ class TodosController < ApplicationController
 
   def todo_params
     params.require(:todo).permit(:description)
+  end
+
+  def move_params
+    params.require(:todo).permit(:dolist_id)
   end
 
   def current_list
