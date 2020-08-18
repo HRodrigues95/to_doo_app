@@ -1,0 +1,11 @@
+<%provide(:title,'All ToDo')%>
+<h1>All Lists</h1>
+<div class="center" >
+  <%= link_to "Add", new_dolist_path, class:"btn btn-lg btn-primary"%>
+</div>
+<div class= "row">
+  <ul class = "list-group">
+    <%= render  @dolists %>
+  </ul>
+<div>
+

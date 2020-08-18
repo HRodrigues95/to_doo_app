@@ -1,0 +1,7 @@
+<%=form_with( model: current_user.dolists.build, local:true) do |f| %>
+    <%= render 'shared/error_messages', object: f.object%>
+    <%=f.label :name%>
+    <%=f.text_field :name, class: 'form-control'%>
+      
+    <%=f.submit "Add", class: "btn btn-primary"%>
+<%end%>

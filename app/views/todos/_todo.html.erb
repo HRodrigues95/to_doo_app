@@ -1,0 +1,21 @@
+<li>
+ <div class="row">
+    <section class= "col">
+      Task: <%= todo.description %>
+    </section>
+    <section class= "col">
+      <% if todo.done %>
+        <span class="badge badge-success">
+          Done
+        </span> 
+      <% else%>
+        <%= link_to "Done", todo, method: :put, class: "btn btn-primary"%>
+      <% end %>
+    </section>
+    <span class="timestamp">
+        Created at <%= time_ago_in_words(todo.created_at) %> ago.
+        <%= link_to "X", todo, method: :delete, class: "btn btn-secundary", 
+                           data: { confirm: "You sure?" } %>
+    </span>
+ </div>
+</li>

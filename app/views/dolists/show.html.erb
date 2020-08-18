@@ -1,0 +1,13 @@
+<% provide(:title, "To do List") %>
+<div class="row">
+  <h1> <%= @dolist.name %> </h1>
+  <div class= "center jumbotron">
+    <%= render  'shared/todo_form' %>
+  </div>
+  <div class="list-group">
+    <%= render @todos %>
+  </div>
+</div>
+<section class="btn-group" role="group" arai-label="Help">
+    <%= link_to  "Back to my lists", dolists_path, class:"btn btn-secundary" %>
+</section>

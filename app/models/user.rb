@@ -1,14 +1,22 @@
 class User < ApplicationRecord
-  before_save {self.email = email.downcase}
-  validates :name , presence: true, 
-                    length: {minimum:3, maximum:50}
-
+  before_save { self.email = email.downcase }
+  validates :name, presence: true,length: { minimum: 3, maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   validates :email, presence: true,
-                    length: {minimum:3, maximum:255},
+                    length: { minimum: 3, maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: true
   has_secure_password
-  validates :password, presence: true,
-                      length: {minimum:6}
+  validates :password, presence: true, length: { minimum: 6 }
+  has_many :dolists, dependent: :destroy
+
+  def self.digest(string)
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
+    BCrypt::Password.create(string, cost: cost)
+  end
+
+  def lists
+    dolists
+  end
+  
 end

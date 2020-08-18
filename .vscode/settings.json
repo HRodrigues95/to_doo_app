@@ -1,0 +1,5 @@
+{
+    "code-runner.clearPreviousOutput": true,
+    "ruby.rubocop.useBundler": true,
+    "ruby.rubocop.executePath": "/Users/h.rodrigues/.rvm/gems/ruby-2.6.3/bin/"
+}
