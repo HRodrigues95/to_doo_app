@@ -1,7 +1,16 @@
  <%= form_with(model: @todo, local:true) do |f| %>
   <%= render 'shared/error_messages', object: f.object%>
   <div class="field">
-        <%= f.text_area :description, placeholder:"Compose new to do..."%>
-    </div>
-  <%=f.submit "Add to do", class: "btn btn-primary"%>
-  <% end %>
+    <%= f.label :description, "Text:" %>
+    <%= f.text_area :description, placeholder:"Compose new to do..."%>
+  </div>
+  <div class="field">
+    <%= f.label :all_tags, "Tags:" %>
+    <%= f.text_field :all_tags, placeholder: 'Tags separated with comma |,|'%>
+  </div>
+  <div class="field">
+    <%= f.label :do_date, "Do Date:" %>
+    <%= f.date_field :do_date, min: Date.today %>
+  </div>
+  <%=f.submit "Add to do" , class: "btn btn-primary"%>
+<% end %>

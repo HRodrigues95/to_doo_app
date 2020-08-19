@@ -37,9 +37,23 @@ class DolistsController < ApplicationController
     end
   end
 
+  def filter
+    debugger
+    @dolist = Dolist.find_by(id: params[:dolist_id])
+    update_dolist(@dolist)
+    tag = Tag.find_by(id: params[:filter][:tag_id])
+    @todos = tag.todos.where(done: params[:filter][:status])
+    @todo = Todo.new
+    render 'show'
+  end
+
   private
 
   def list_params
     params.require(:dolist).permit(:name)
+  end
+
+  def filter_params
+    #params.require(:)
   end
 end

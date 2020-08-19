@@ -4,11 +4,9 @@ class TodosController < ApplicationController
   def create
     @todo = current_list.todos.build(todo_params)
     if @todo.save
-      puts @list
-      puts @todo
       flash[:success] = 'To do added!'
     end
-    redirect_to @list
+    redirect_to current_list
   end
 
   def destroy
@@ -36,11 +34,11 @@ class TodosController < ApplicationController
   private
 
   def todo_params
-    params.require(:todo).permit(:description)
+    params.require(:todo).permit(:description,:all_tags)
   end
 
-  def move_params
-    params.require(:todo).permit(:dolist_id)
+  def tag_params
+    params.require(:ref_tags).permit(:tags)
   end
 
   def current_list

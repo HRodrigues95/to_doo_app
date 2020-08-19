@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_17_103851) do
+ActiveRecord::Schema.define(version: 2020_08_19_070841) do
 
   create_table "dolists", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -18,6 +18,22 @@ ActiveRecord::Schema.define(version: 2020_08_17_103851) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_dolists_on_user_id"
+  end
+
+  create_table "taglinks", force: :cascade do |t|
+    t.integer "todo_id", null: false
+    t.integer "tag_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["tag_id"], name: "index_taglinks_on_tag_id"
+    t.index ["todo_id"], name: "index_taglinks_on_todo_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
   create_table "todos", force: :cascade do |t|
@@ -39,5 +55,7 @@ ActiveRecord::Schema.define(version: 2020_08_17_103851) do
   end
 
   add_foreign_key "dolists", "users"
+  add_foreign_key "taglinks", "tags"
+  add_foreign_key "taglinks", "todos"
   add_foreign_key "todos", "dolists"
 end
