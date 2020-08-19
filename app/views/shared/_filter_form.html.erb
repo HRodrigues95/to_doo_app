@@ -1,16 +1,17 @@
-<%= form_for(dolist_filter_path(@dolist), url:dolist_filter_path(@dolist), method: 'get', local: true) do %>
+<%= form_tag(dolist_path(@dolist), url:dolist_path(@dolist), method: 'get', local: true) do %>
   <p> Filter: </p>
-  <div class="row">
-    <%= label      'filter', :tags, "Tags:" %>
-    <%= collection_select 'filter', :tag_id, Tag.all, :id, :name,
-      params[:filter].nil? ? {} : { selected: params[:filter][:tag_id] }
-    %>
+  <div class="contianer">
+    <%= label 'filter', :tags, "Tags:" %>
+    <%= collection_select 'filter', :tag_id, Tag.all, :id, :name, params[:filter].nil? ? 
+        { include_blank:true } : {include_blank:true, selected: params[:filter][:tag_id]} %>
 
-    <%= label      'filter', :status, "Status:" %>
-    <%=select("filter", :status, { "Done":true, "Not done":false } , params[:filter].nil? ? {} : { selected: params[:filter][:status] })%>
+    <%= label 'filter', :status, "Status:" %>
+    <%= select("filter", :status, { "Done":true, "Not done":false } , params[:filter].nil? ? 
+      { include_blank:true } : { include_blank:true, selected: params[:filter][:status] }) %>
 
     <%= label      'filter', :date, "Date:" %>
-    <%= date_field 'filter', :date, value: Date.today %>
+    <%= date_field 'filter', :date, value: params[:filter].nil? ? Date.today : params[:filter][:date] %>
+
+    <%= submit_tag "Apply" , class: "btn btn-primary"%>
   </div>
-  <%=submit_tag "Apply" , class: "btn btn-primary"%>
 <% end %>

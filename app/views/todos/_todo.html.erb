@@ -1,34 +1,35 @@
-<li>
- <div class="row">
-    <section class= "col">
-      Task: <%= todo.description %>
-      <p>Tags: <%= todo.all_tags%></p>
-    </section>
-    <section class= "col">
-      <% if todo.done %>
-        <span class="badge badge-success">
-          Done
-        </span> 
-      <% else%>
-        <%= link_to "Done", todo, method: :put, class: "btn btn-primary"%>
-      <% end %>
-    </section>
-    <section class="col">
-      <%= form_with(model: todo, method: :put ) do |f| %>
-        <%= f.label  :dolist_id, "Lista para mover:" %>
-        <%= f.select :dolist_id, current_user.dolists.collect { 
-          |l| 
-          if l.id != @dolist.id 
-            [l.name, l.id]
-          end  
-          } %>
-        <%= f.submit "Move", class: "btn btn-primary"%>
-      <% end %>
-    </section>
-    <span class="timestamp">
-        Created at <%= time_ago_in_words(todo.created_at) %> ago.
+<li class="list-group-item">
+ <div class= "container">
+    <div class= "row justify-content-md-center">
+      <div class="col-md-2">  Task: <%= todo.description %> </div>
+      <div class="col-md-2">  Tags: <%= todo.all_tags%> </div>
+      <div class="col-md-2">  Do Date: <%= todo.do_date %> </div>
+      <div class="col-md-1">
+        <% if todo.done %>
+          <div class="badge badge-success"> Done </div>
+        <% elsif todo.do_date < Date.today %>
+          <div class="badge badge-error"> Expired </div>
+        <% else%>
+          <%= link_to "Done", todo, method: :put, class: "btn btn-primary"%>
+        <% end %>
+      </div>
+      <div class="col-md-3">
+        <%= form_with(model: todo, method: :put ) do |f| %>
+          <%= f.label  :dolist_id, "Mover para:" %>
+          <%= f.select :dolist_id, current_user.dolists.collect { 
+            |l| 
+            if l.id != @dolist.id 
+              [l.name, l.id]
+            end  
+            } %>
+          <%= f.submit "Move", class: "btn btn-primary"%>
+        <% end %>
+      </div>
+      <div class="col-md-1"> 
         <%= link_to "X", todo, method: :delete, class: "btn btn-secundary", 
-                           data: { confirm: "You sure?" } %>
-    </span>
+                              data: { confirm: "You sure?" } %>
+      </div>
+    </div>
+    
  </div>
 </li>

@@ -4,8 +4,10 @@ class Tag < ApplicationRecord
   has_many :taglinks, dependent: :destroy
   has_many :todos, through: :taglinks
 
-  def filter
-    
+  def filter(dolist, param = {})
+    res = todos
+    res = res.where(dolist_id: dolist)
+    res = res.where(done: param[:done]) unless param[:done].empty? || param[:done].nil?
+    res.where('do_date >= ?', param[:date]) unless param[:date].empty? || param[:date].nil?
   end
-  
 end

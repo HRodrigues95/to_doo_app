@@ -18,8 +18,9 @@ class TodosController < ApplicationController
   end
 
   def update
+    debugger
     @todo = Todo.find_by(id: params[:id])
-    if !params[:todo][:dolist_id].nil?
+    if !params[:todo].nil?
       @todo.dolist_id = params[:todo][:dolist_id]
     else
       @todo.done = !@todo.done
@@ -28,13 +29,13 @@ class TodosController < ApplicationController
       puts @todo
       flash[:success] = 'To do updated!'
     end
-    redirect_to current_list
+    redirect_to dolist_path(current_list)
   end
 
   private
 
   def todo_params
-    params.require(:todo).permit(:description,:all_tags)
+    params.require(:todo).permit(:description, :all_tags, :do_date)
   end
 
   def tag_params

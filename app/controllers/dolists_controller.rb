@@ -1,6 +1,6 @@
 class DolistsController < ApplicationController
   before_action :logged_in_user, only: [:index, :show, :create, :destroy]
-  
+
   def index
     @dolists = current_user.lists
   end
@@ -8,8 +8,8 @@ class DolistsController < ApplicationController
   def show
     @dolist = Dolist.find_by(id: params[:id])
     update_dolist(@dolist)
-    @todos  = @dolist.todos
-    @todo   = Todo.new
+    apply_filter
+    @todo = Todo.new
   end
 
   def new
@@ -37,16 +37,6 @@ class DolistsController < ApplicationController
     end
   end
 
-  def filter
-    debugger
-    @dolist = Dolist.find_by(id: params[:dolist_id])
-    update_dolist(@dolist)
-    tag = Tag.find_by(id: params[:filter][:tag_id])
-    @todos = tag.todos.where(done: params[:filter][:status])
-    @todo = Todo.new
-    render 'show'
-  end
-
   private
 
   def list_params
@@ -54,6 +44,19 @@ class DolistsController < ApplicationController
   end
 
   def filter_params
-    #params.require(:)
+    params.require(:filter).permit(:tag_id, :status, :date)
+  end
+
+  def apply_filter
+    if params[:filter].nil?
+      @todos = @dolist.todos
+    elsif !params[:filter][:tag_id].empty?
+      tag = Tag.find_by(id: params[:filter][:tag_id])
+      @todos = tag.filter(params[:id], {
+        date: params[:filter][:date], done: params[:filter][:status]})
+    else
+      @todos = @dolist.filter({
+        done: params[:filter][:status], date: params[:filter][:date] })
+    end
   end
 end

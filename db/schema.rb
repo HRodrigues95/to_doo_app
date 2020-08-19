@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_19_070841) do
+ActiveRecord::Schema.define(version: 2020_08_19_124145) do
 
   create_table "dolists", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2020_08_19_070841) do
     t.boolean "done", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.date "do_date"
     t.index ["dolist_id"], name: "index_todos_on_dolist_id"
   end
 
