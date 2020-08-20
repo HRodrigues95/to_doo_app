@@ -5,9 +5,7 @@ Rails.application.routes.draw do
   post '/login' , to: 'sessions#create'
   delete '/logout' , to: 'sessions#destroy'
   resources :users
-  resources :dolists do
-    get '/filter' => 'dolists#filter', as: 'filter'
-  end
+  resources :dolists
   resources :todos, only: [:create, :update, :destroy] do
     resources :tags, only: :create
   end
