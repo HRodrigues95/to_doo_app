@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
-  def new() end
+  # In ruby/rails, when a method has no arguments,
+  # don't type the parenthesis
+  def new; end
 
   def create
     user = User.find_by(email: params[:session][:email].downcase)

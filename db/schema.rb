@@ -10,6 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+# One important thing about this file:
+# it should NEVER EVER be edited manually
 ActiveRecord::Schema.define(version: 2020_08_19_124145) do
 
   create_table "dolists", force: :cascade do |t|

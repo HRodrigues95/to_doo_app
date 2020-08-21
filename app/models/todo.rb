@@ -5,10 +5,9 @@ class Todo < ApplicationRecord
   has_many :tags, through: :taglinks
 
   def all_tags=(names)
-    self.tags = names.split(',').map do |name|
-      unless name.nil?
-        Tag.where(name: name.strip).first_or_create!
-      end
+    self.tags = names.split(',').reject(&:blank?).map do |name|
+      Tag.where(name: name.strip)
+         .first_or_create!
     end
   end
 

@@ -6,7 +6,7 @@ class Tag < ApplicationRecord
 
   def filter(dolist, param = {})
     res = todos
-    res = res.where(dolist_id: dolist)
+    res = res.where(dolist_id: dolist) # if param `dolist` is an id, param should be named `dolist_id`
     res = res.where(done: param[:done]) unless param[:done].empty? || param[:done].nil?
     res.where('do_date >= ?', param[:date]) unless param[:date].empty? || param[:date].nil?
   end

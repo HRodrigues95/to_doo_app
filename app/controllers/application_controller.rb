@@ -3,10 +3,13 @@ class ApplicationController < ActionController::Base
 
   private
 
+  # A better name for this method would be `user_logged_in?`
   def logged_in_user
-    unless logged_in?
-      flash[:dange] = 'Please login'
-      redirect_to login_url
-    end
+    # This is called early exiting. It's better to return ASAP
+    # than to go through lots of conditions/db access/etc
+    return if logged_in?
+
+    flash[:danger] = 'Please login'
+    redirect_to login_url
   end
 end
